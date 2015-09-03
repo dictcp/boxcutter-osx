@@ -12,6 +12,7 @@ MAC_OSX_10_7_LION_BOOT_DMG ?= OSX_InstallESD_10.7.5_11G63.dmg
 MAC_OSX_10_8_MOUNTAIN_LION_BOOT_DMG ?= OSX_InstallESD_10.8.5_12F45.dmg
 MAC_OSX_10_9_MAVERICKS_BOOT_DMG ?= OSX_InstallESD_10.9_13A603.dmg
 MAC_OSX_10_10_YOSEMITE_BOOT_DMG ?= OSX_InstallESD_10.10_14A389.dmg
+MAC_OSX_10_10_5_YOSEMITE_BOOT_DMG ?= OSX_InstallESD_10.10.5_14F27.dmg
 
 # Possible values for CM: (nocm | chef | chefdk | salt | puppet)
 CM ?= nocm
@@ -191,6 +192,11 @@ $(VIRTUALBOX_BOX_DIR)/osx1010-desktop$(BOX_SUFFIX): osx1010-desktop.json $(SOURC
 	rm -rf $(VIRTUALBOX_OUTPUT)
 	mkdir -p $(VIRTUALBOX_BOX_DIR)
 	$(PACKER) build -only=$(VIRTUALBOX_BUILDER) $(PACKER_VARS) -var "iso_url=dmg/$(MAC_OSX_10_10_YOSEMITE_BOOT_DMG)" $<
+
+$(VIRTUALBOX_BOX_DIR)/osx10105-desktop$(BOX_SUFFIX): osx10105-desktop.json $(SOURCES) tpl/vagrantfile-osx1010-desktop.tpl dmg/$(MAC_OSX_10_10_5_YOSEMITE_BOOT_DMG)
+	rm -rf $(VIRTUALBOX_OUTPUT)
+	mkdir -p $(VIRTUALBOX_BOX_DIR)
+	$(PACKER) build -only=$(VIRTUALBOX_BUILDER) $(PACKER_VARS) -var "iso_url=dmg/$(MAC_OSX_10_10_5_YOSEMITE_BOOT_DMG)" $<
 
 $(VIRTUALBOX_BOX_DIR)/osx109$(BOX_SUFFIX): osx109.json $(SOURCES) dmg/$(MAC_OSX_10_9_MAVERICKS_BOOT_DMG)
 	rm -rf $(VIRTUALBOX_OUTPUT)
